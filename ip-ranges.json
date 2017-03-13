@@ -1,6 +1,6 @@
 {
-  "syncToken": "1489423930",
-  "createDate": "2017-03-13-16-52-10",
+  "syncToken": "1489438329",
+  "createDate": "2017-03-13-20-52-09",
   "prefixes": [
     {
       "ip_prefix": "13.32.0.0/15",
@@ -3789,6 +3789,11 @@
     },
     {
       "ip_prefix": "35.162.63.192/26",
+      "region": "us-west-2",
+      "service": "CLOUDFRONT"
+    },
+    {
+      "ip_prefix": "35.167.191.128/26",
       "region": "us-west-2",
       "service": "CLOUDFRONT"
     },

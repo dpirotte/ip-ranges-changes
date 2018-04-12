@@ -6,7 +6,7 @@ QUEUE="ip-ranges-changes"
 SQS="aws --profile=ip-ranges-changes sqs"
 QURL="https://queue.amazonaws.com/788222722721/$QUEUE"
 
-$SQS send-message --queue-url $QURL --message-body "$(cat sqs/test.json)" > /dev/null
+# $SQS send-message --queue-url $QURL --message-body "$(cat sqs/test.json)" > /dev/null
 
 
 while sleep 1; do
@@ -20,18 +20,18 @@ while sleep 1; do
     TOKEN=$(echo $BODY | jq -r ".syncToken")
     URL=$(echo $BODY | jq -r .url)
 
-    wget -q https://ip-ranges.amazonaws.com/ip-ranges.json -O ip-ranges.json
+    # wget -q https://ip-ranges.amazonaws.com/ip-ranges.json -O ip-ranges.json
     JSON_MD5=$(md5sum ip-ranges.json | awk '{print $1}')
 
-    if [[ "$MD5" == "$JSON_MD5" && $(git status -s ip-ranges.json) ]]; then
-      git add ip-ranges.json
-      git commit -m "updating ip-ranges.json"
-      git push
+    # if [[ "$MD5" == "$JSON_MD5" && $(git status -s ip-ranges.json) ]]; then
+    #   git add ip-ranges.json
+    #   git commit -m "updating ip-ranges.json"
+    #   git push
 
       $SQS delete-message --queue-url $QURL --receipt-handle $ID
-    else
-      echo "downloaded but md5 does not match or file is not updated" | ts
-    fi
+    # else
+    #   echo "downloaded but md5 does not match or file is not updated" | ts
+    # fi
   fi
-end
+done
 
